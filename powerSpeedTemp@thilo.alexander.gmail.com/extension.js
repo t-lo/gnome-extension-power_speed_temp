@@ -44,16 +44,21 @@ const PowerIndicator = new Lang.Class({
 
   _averageTab: function(tab){
     let sum=0;
-    for(i=0;i<tab.length;i++){
+    for(let i=0;i<tab.length;i++){
       sum=sum+tab[i];
     };
     return sum/tab.length;
   },
 
+  _exec_script: function(scriptname) {
+    let extension_dir=GLib.get_home_dir()
+                        + "/.local/share/gnome-shell/extensions"
+                        +"/powerSpeedTemp@thilo.alexander.gmail.com";
+    return GLib.spawn_command_line_sync(extension_dir + "/" + scriptname);
+  },
+
   _getCurrentFrequency: function(){               
-    let [ret, out] = GLib.spawn_command_line_sync(
-            // TODO: relative path
-            '/home/t-lo/.local/share/gnome-shell/extensions/powerIndicator@germain.louis.80.gmail.com/getfreq.sh');
+    let [ret, out] = this._exec_script("getfreq.sh");
     return Number(out)/1000000;
   },
 
