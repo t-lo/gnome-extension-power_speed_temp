@@ -6,7 +6,6 @@ const Lang = imports.lang;
 const PanelMenu = imports.ui.panelMenu;
 const Clutter = imports.gi.Clutter;
 const Gio = imports.gi.Gio;
-const DATAPATH = "/sys/class/power_supply/BAT0/power_now";
 
 
 const PowerIndicator = new Lang.Class({
@@ -63,13 +62,13 @@ const PowerIndicator = new Lang.Class({
   },
 
   _getCurrentPower: function(){
-    return Number(GLib.file_get_contents(DATAPATH)[1])/1000000;
+    let [ret, out] = this._exec_script("getpwr.sh");
+    return Number(out);
   },
 
   _getCurrentTemp: function(){
-    // TODO: read all & report max
-    return Number(GLib.file_get_contents(
-                "/sys/class/thermal/thermal_zone4/temp")[1])/1000;
+    let [ret, out] = this._exec_script("gettemp.sh");
+    return Number(out)/1000;
   },
 
   _removeTimeout: function(){

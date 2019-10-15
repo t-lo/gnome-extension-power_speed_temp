@@ -1,3 +1,2 @@
 #!/bin/bash
-
-sensors | awk '/Package id 0/{printf $4}'
+cat /sys/class/thermal/thermal_zone*/temp | sort -n | tail -n1
