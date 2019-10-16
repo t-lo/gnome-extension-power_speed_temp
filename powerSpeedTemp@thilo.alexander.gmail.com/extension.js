@@ -63,7 +63,7 @@ const PowerIndicator = new Lang.Class({
 
   _getCurrentPower: function(){
     let [ret, out] = this._exec_script("getpwr.sh");
-    return Number(out);
+    return Number(out) / 1000;
   },
 
   _getCurrentTemp: function(){

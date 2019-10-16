@@ -11,7 +11,7 @@ res="0"
   -a -e "/sys/class/power_supply/BAT0/voltage_now" ] && {
 	c=$(cat /sys/class/power_supply/BAT0/current_now)
 	v=$(cat /sys/class/power_supply/BAT0/voltage_now)
-	res="$(( (c/1000000) * (v/1000000) ))"
+	res="$(( (c/1000) * (v/1000000) ))"
 }
 
 echo -n $res
